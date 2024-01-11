@@ -9,6 +9,7 @@ if len(sys.argv) < 2:
 
 # PROGRAM FUNCTIONS / VARIABLES
 
+# Time Complexity: O(N)
 # Input :: FilePath | Output :: [alphanum sequence] list
 def tokenize(filePath):
     # Open the file in read mode
@@ -33,6 +34,7 @@ def tokenize(filePath):
         )
       )
 
+# Time Complexity: O(M)
 # Input :: [alphanum] list | Output :: {alphanum: frequency} dictionary
 def computeWordFrequencies(wordList):
   word_count = {}
@@ -41,6 +43,7 @@ def computeWordFrequencies(wordList):
     word_count[word] = word_count.get(word, 0) + 1
   return word_count
 
+# Time Complexity: O(K log K)
 # Input :: {alphanum: frequency} dictionary | Output :: Command line formatted print of input
 def printFrequencies(frequencyMap):
   # Sort the dictionary by value (frequency) and then by key (word) in case of ties

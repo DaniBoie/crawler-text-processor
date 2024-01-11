@@ -9,6 +9,7 @@ if len(sys.argv) < 3:
 
 # PROGRAM FUNCTIONS / VARIABLES
 
+# Time Complexity: O(N)
 # Input :: FilePath | Output :: [alphanum sequence] list
 def tokenize(filePath):
     # Open the file in read mode
@@ -33,13 +34,17 @@ def tokenize(filePath):
         )
       )
 
-def computeWordFrequencies(wordList):
-  word_count = set()
+# Time Complexity: O(M)
+# Input :: [words] list | Output :: (unique word) set
+def computeUniqueWords(wordList):
+  unique_words = set()
   for word in wordList:
     # Increment the count for each word
-    word_count.add(word)
-  return word_count
+    unique_words.add(word)
+  return unique_words
 
+# Time Complexity: O(min(len(file_set1), len(file_set2))) [for intersection of 2 sets]
+# Input :: (words1) set, (words2) set | Output :: Command line print of number of word intersections
 def printFrequencies(set1, set2):
   print(len(set1.intersection(set2)))
 
@@ -55,7 +60,7 @@ file_set2 = set();
 
 # Try to tokenize file name and token print frequencies, handle error
 try:
-    file_set1 = computeWordFrequencies(tokenize(file_name1)) 
+    file_set1 = computeUniqueWords(tokenize(file_name1)) 
 except FileNotFoundError:
     print(f"The file {file_name1} does not exist.")
     sys.exit(1)
@@ -65,7 +70,7 @@ except Exception as e:
 
 # Try to tokenize file name and token print frequencies, handle error
 try:
-    file_set2 = computeWordFrequencies(tokenize(file_name2)) 
+    file_set2 = computeUniqueWords(tokenize(file_name2)) 
 except FileNotFoundError:
     print(f"The file {file_name2} does not exist.")
     sys.exit(1)
