@@ -1,13 +1,14 @@
 import sys
 
+# PROGRAM FUNCTIONS / VARIABLES
+
 punctuationMarks = '!"#$%&\'()*+,-./:;<=>?@[\]^_`{|}~'
 
 def tokenize(filePath):
     # Open the file in read mode
-  with open(filePath, 'r') as file:
+  with open(filePath, 'r', encoding='utf-8') as file:
     # Read content in the file
     content = file.read()
-
     # translate punctuation marks in content to whitespace
     translation_table = str.maketrans(punctuationMarks, ' ' * len(punctuationMarks))
     stripped_text = content.translate(translation_table)
@@ -35,19 +36,14 @@ def printFrequencies(frequencyMap):
   for word, count in sorted_word_map:
     print(f"{word}\t{count}")
 
-# Check if a file name was provided as a command line argument
-if len(sys.argv) < 2:
-    print("Please provide a file name as a command line argument.")
-    sys.exit(1)
+# MAIN PROGRAM
 
+# Get file name and set up word list
 file_name = sys.argv[1]
 tokens = [];
 
+# Try to tokenize file name, handle error
 try:
     tokens = tokenize(file_name)
-except FileNotFoundError:
-    print(f"The file {file_name} does not exist.")
-except Exception as e:
-    print(f"An error occurred: {e}")
-
-printFrequencies(computeWordFrequencies(tokens))
+finally:
+  printFrequencies(computeWordFrequencies(tokens))
