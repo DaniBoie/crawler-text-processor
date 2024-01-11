@@ -3,8 +3,8 @@ import sys
 # PROGRAM PRE-CONDITIONS
 
 # Check if a file name was provided as a command line argument
-if len(sys.argv) < 2:
-    print("Please provide a file name as a command line argument.")
+if len(sys.argv) < 3:
+    print("Please provide 2 file names as a command line argument.")
     sys.exit(1)
 
 # PROGRAM FUNCTIONS / VARIABLES
@@ -33,34 +33,47 @@ def tokenize(filePath):
         )
       )
 
-# Input :: [alphanum] list | Output :: {alphanum: frequency} dictionary
 def computeWordFrequencies(wordList):
-  word_count = {}
+  word_count = set()
   for word in wordList:
     # Increment the count for each word
-    word_count[word] = word_count.get(word, 0) + 1
+    word_count.add(word)
   return word_count
 
-# Input :: {alphanum: frequency} dictionary | Output :: Command line formatted print of input
-def printFrequencies(frequencyMap):
-  # Sort the dictionary by value (frequency) and then by key (word) in case of ties
-  sorted_word_map = sorted(frequencyMap.items(), key=lambda item: (-item[1], item[0]))
-    
-  # Print the sorted word frequency counts
-  for word, count in sorted_word_map:
-    print(f"{word}\t{count}")
+def printFrequencies(set1, set2):
+  print(len(set1.intersection(set2)))
+
 
 # MAIN PROGRAM
 
 # Get file name and set up word list
-file_name = sys.argv[1]
-tokens = [];
+file_name1 = sys.argv[1]
+file_name2 = sys.argv[2]
+
+file_set1 = set();
+file_set2 = set();
 
 # Try to tokenize file name and token print frequencies, handle error
 try:
-    tokens = tokenize(file_name)
-    printFrequencies(computeWordFrequencies(tokens))
+    file_set1 = computeWordFrequencies(tokenize(file_name1)) 
 except FileNotFoundError:
-    print(f"The file {file_name} does not exist.")
+    print(f"The file {file_name1} does not exist.")
+    sys.exit(1)
 except Exception as e:
-    print(f"An error occurred: {e}")
+    print(f"An error occurred in file1 processing: {e}")
+    sys.exit(1)
+
+# Try to tokenize file name and token print frequencies, handle error
+try:
+    file_set2 = computeWordFrequencies(tokenize(file_name2)) 
+except FileNotFoundError:
+    print(f"The file {file_name2} does not exist.")
+    sys.exit(1)
+except Exception as e:
+    print(f"An error occurred in file2 processing: {e}")
+    sys.exit(1)
+
+try:
+  printFrequencies(file_set1, file_set2)
+except e:
+  print(f"An error occurred merge file processing: {e}")
